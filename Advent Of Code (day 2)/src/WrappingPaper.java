@@ -1009,16 +1009,37 @@ public class WrappingPaper {
         String[] assignmentArray = assignment.split("[x\n]");
         int[] assignmentArrayNumb = new int[assignmentArray.length];
         int paperNeededTotal = 0;
+        int ribbonNeeded = 0;
 
         for (int i = 0; i < assignmentArray.length; i++) {
             assignmentArrayNumb[i] = Integer.parseInt(assignmentArray[i]);
         }
 
+        int minimumOne, minimumTwo = 0;
         for (int i = 0; i < assignmentArrayNumb.length; i+=3) {
+            if(assignmentArrayNumb[i] < assignmentArrayNumb[i+1]){
+                minimumOne = assignmentArrayNumb[i];
+                if (assignmentArrayNumb[i+1] < assignmentArrayNumb[i+2]){
+                    minimumTwo = assignmentArrayNumb[i+1];
+                } else{
+                    minimumTwo = assignmentArrayNumb[i+2];
+                }
+            } else{
+                minimumOne = assignmentArrayNumb[i+1];
+                if(assignmentArrayNumb[i]< assignmentArrayNumb[i+2]){
+                    minimumTwo = assignmentArrayNumb[i];
+                } else{
+                    minimumTwo = assignmentArrayNumb[i+2];
+                }
+            }
+
+            ribbonNeeded += (minimumOne+minimumOne+minimumTwo+minimumTwo)+(assignmentArrayNumb[i]*assignmentArrayNumb[i+1]*assignmentArrayNumb[i+2]);
             paperNeededTotal += calculatePaperNeeded(assignmentArrayNumb[i], assignmentArrayNumb[i + 1], assignmentArrayNumb[i + 2]);
+
         }
 
-        System.out.println(paperNeededTotal);
+        System.out.println("Paper: "+ paperNeededTotal);
+        System.out.println("Ribbon: " + ribbonNeeded);
 
 
     }
@@ -1040,4 +1061,6 @@ public class WrappingPaper {
 
         return paperNeeded;
     }
+
+
 }
